@@ -19,7 +19,7 @@ module.exports.handler = (event, context, callback) => {
 
             console.log(`${username}/${project}:${tag}`);
 
-            const circleci_url = `${CIRCLECI_API}/${username}/${project}?circle-token=${CIRCLECI_TOKEN}`;
+            const circleci_url = `${CIRCLECI_API}?circle-token=${CIRCLECI_TOKEN}`;
 
             const message = {
                 build_parameters : {
