@@ -10,12 +10,12 @@ module.exports.handler = (event, context, callback) => {
     console.log(event);
 
     if (event.httpMethod === 'POST' && event.body) {
-        const body = JSON.parse(event.body);
+        const json = JSON.parse(event.body);
 
-        if (body.repository && body.push_data) {
-            const username = body.repository.namespace;
-            const project = body.repository.name;
-            const tag = body.push_data.tag;
+        if (json.repository && json.push_data) {
+            const username = json.repository.namespace;
+            const project = json.repository.name;
+            const tag = json.push_data.tag;
 
             console.log(`${username}/${project}:${tag}`);
 
