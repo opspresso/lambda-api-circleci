@@ -43,13 +43,12 @@ module.exports.handler = (event, context, callback) => {
                 res.on('data', (chunk) => chunks.push(chunk));
                 res.on('end', () => {
                     if (callback) {
-                        const result = {
+                        console.log(`${res.statusCode} ${res.statusMessage}`);
+                        callback({
                             body: chunks.join(''),
                             statusCode: res.statusCode,
                             statusMessage: res.statusMessage,
-                        }
-                        console.log(result);
-                        callback(result);
+                        });
                     }
                 });
                 return res;
