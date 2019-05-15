@@ -21,3 +21,11 @@ variable s3_bucket {
 variable version {
   default = "1.0.0"
 }
+
+variable CIRCLECI_API {
+  default = "https://circleci.com/api/v1.1/project/gh"
+}
+
+variable CIRCLECI_TOKEN {
+  default = ""
+}

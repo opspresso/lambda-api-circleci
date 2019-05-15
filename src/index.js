@@ -1,19 +1,60 @@
 'use strict';
 
+const url = require('url');
+const https = require('https');
+
+const CIRCLECI_API = process.env.CIRCLECI_API || 'https://circleci.com/api/v1.1/project/gh';
+const CIRCLECI_TOKEN = process.env.CIRCLECI_TOKEN;
+
 module.exports.handler = (event, context, callback) => {
     console.log(event);
 
     if (event.httpMethod === 'POST' && event.body) {
-        var body = JSON.parse(event.body);
+        const body = JSON.parse(event.body);
 
         if (body.repository && body.push_data) {
-            var namespace = body.repository.namespace;
-            var name = body.repository.name;
-            var tag = body.push_data.tag;
+            const username = body.repository.namespace;
+            const project = body.repository.name;
+            const tag = body.push_data.tag;
 
-            console.log('namespace : ' + namespace);
-            console.log('name : ' + name);
-            console.log('tag : ' + tag);
+            console.log(`${username}/${project}:${tag}`);
+
+            const circleci_url = `${CIRCLECI_API}/${username}/${project}?circle-token=${CIRCLECI_TOKEN}`;
+
+            const message = {
+                build_parameters : {
+                    TG_USERNAME : username,
+                    TG_PROJECT : project,
+                    TG_VERSION : tag,
+                }
+            }
+
+            const body = JSON.stringify(message);
+            const options = url.parse(circleci_url);
+            options.method = 'POST';
+            options.headers = {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(body),
+            };
+
+            const req = https.request(options, (res) => {
+                const chunks = [];
+                res.setEncoding('utf8');
+                res.on('data', (chunk) => chunks.push(chunk));
+                res.on('end', () => {
+                    if (callback) {
+                        callback({
+                            body: chunks.join(''),
+                            statusCode: res.statusCode,
+                            statusMessage: res.statusMessage,
+                        });
+                    }
+                });
+                return res;
+            });
+
+            req.write(body);
+            req.end();
         }
     }
 
