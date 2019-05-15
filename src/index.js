@@ -3,7 +3,7 @@
 const url = require('url');
 const https = require('https');
 
-const CIRCLECI_API = process.env.CIRCLECI_API || 'https://circleci.com/api/v1.1/project/gh';
+const CIRCLECI_API = process.env.CIRCLECI_API;
 const CIRCLECI_TOKEN = process.env.CIRCLECI_TOKEN;
 
 module.exports.handler = (event, context, callback) => {
