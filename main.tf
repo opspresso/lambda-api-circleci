@@ -25,7 +25,7 @@ module "dev-api-wifi" {
   name         = "${var.name}"
   stage        = "${var.stage}"
   description  = "docker > lambda > circleci"
-  runtime      = "nodejs10.x"
+  runtime      = "nodejs8.10"
   handler      = "index.handler"
   memory_size  = 512
   timeout      = 5
