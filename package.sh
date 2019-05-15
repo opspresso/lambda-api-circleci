@@ -3,6 +3,8 @@
 rm -rf target
 mkdir -p target
 
+cp ./*.tf ./target/
+
 pushd src
 
 npm run build

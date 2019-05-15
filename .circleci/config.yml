@@ -13,17 +13,28 @@ jobs:
           command: |
             ./package.sh
       - persist_to_workspace:
-          root: target
+          root: .
           paths:
-            - lambda.zip
+            - .
       - store_artifacts:
           path: target/lambda.zip
+  test:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test
+          command: |
+            terraform init
+            terraform plan
   deploy:
     docker:
       - image: hashicorp/terraform:light
     steps:
       - attach_workspace:
-          at: target
+          at: .
       - run:
           name: Deploy
           command: |
@@ -35,6 +46,9 @@ workflows:
   apply:
     jobs:
       - build
-      - deploy:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
