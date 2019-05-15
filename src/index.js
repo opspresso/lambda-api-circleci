@@ -3,10 +3,10 @@
 module.exports.handler = (event, context, callback) => {
     console.log(event);
 
-    if (event.httpMethod === 'POST') {
+    if (event.httpMethod === 'POST' && event.body) {
         var body = JSON.parse(event.body);
 
-        if (body.repository && body.repository) {
+        if (body.repository && body.push_data) {
             var namespace = body.repository.namespace;
             var name = body.repository.name;
             var tag = body.push_data.tag;
@@ -22,7 +22,9 @@ module.exports.handler = (event, context, callback) => {
         headers: {
             'Access-Control-Allow-Origin': '*', // Required for CORS support to work
         },
-        body: 'OK'
+        body: {
+            state: 'success',
+        }
     };
     callback(null, res);
 };
