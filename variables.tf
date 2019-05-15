@@ -23,7 +23,7 @@ variable version {
 }
 
 variable CIRCLECI_API {
-  default = "https://circleci.com/api/v1.1/project/gh/username/project"
+  default = "https://circleci.com/api/v1.1/project/github/username/project"
 }
 
 variable CIRCLECI_TOKEN {
