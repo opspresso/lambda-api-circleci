@@ -7,7 +7,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     region = "ap-northeast-2"
-    bucket = "terraform-nalbam-seoul"
+    bucket = "terraform-opspresso-seoul"
     key = "dev-docker-to-circlci.tfstate"
   }
   required_version = "> 0.11.0"
@@ -18,7 +18,7 @@ module "domain" {
   domain = "${var.domain}"
 }
 
-module "dev-api-wifi" {
+module "dev-api" {
   source = "git::https://github.com/nalbam/terraform-aws-lambda-api.git"
   region = "${var.region}"
 
@@ -47,5 +47,5 @@ module "dev-api-wifi" {
 }
 
 output "url" {
-  value = "https://${module.dev-api-wifi.domain}/webhook"
+  value = "https://${module.dev-api.domain}/webhook"
 }
