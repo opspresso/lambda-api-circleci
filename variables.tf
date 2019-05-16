@@ -11,11 +11,11 @@ variable stage {
 }
 
 variable domain {
-  default = "nalbam.com"
+  default = "opspresso.com"
 }
 
 variable s3_bucket {
-  default = "repo.nalbam.com"
+  default = "repo.opspresso.com"
 }
 
 variable version {
