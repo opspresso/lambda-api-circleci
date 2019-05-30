@@ -22,10 +22,10 @@ module.exports.handler = (event, context, callback) => {
             const circleci_url = `${CIRCLECI_API}?circle-token=${CIRCLECI_TOKEN}`;
 
             const message = {
-                build_parameters : {
-                    TG_USERNAME : username,
-                    TG_PROJECT : project,
-                    TG_VERSION : tag,
+                build_parameters: {
+                    TG_USERNAME: username,
+                    TG_PROJECT: project,
+                    TG_VERSION: tag,
                 }
             }
 

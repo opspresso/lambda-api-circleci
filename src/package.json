@@ -1,10 +1,9 @@
 {
-  "name": "docker-to-circlci",
+  "name": "lambda-api-circleci",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "npm install -s"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

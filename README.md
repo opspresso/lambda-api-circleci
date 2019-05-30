@@ -1,4 +1,4 @@
-# lambda-docker-to-circlci
+# lambda-api-circleci
 
 ```conf
 TF_VAR_domain=opspresso.com

@@ -39,7 +39,7 @@ jobs:
           name: Deploy
           command: |
             terraform init
-            terraform apply -auto-approve -var="version=1.0.${CIRCLE_BUILD_NUM}"
+            terraform apply -auto-approve
 
 workflows:
   version: 2
