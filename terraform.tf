@@ -3,8 +3,8 @@
 terraform {
   backend "s3" {
     region = "ap-northeast-2"
-    bucket = "terraform-opspresso-seoul"
-    key    = "dev-docker-to-circleci.tfstate"
+    bucket = "terraform-nalbam-seoul"
+    key    = "prod-api-circleci.tfstate"
   }
   required_version = ">= 0.12"
 }
