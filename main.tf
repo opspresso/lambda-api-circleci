@@ -1,12 +1,15 @@
-# Terraform Main
+# main
 
 module "domain" {
-  source = "git::https://github.com/nalbam/terraform-aws-route53.git"
-  domain = var.domain
+  source = "github.com/nalbam/terraform-aws-route53?ref=v0.12.29"
+
+  root_domain = var.domain
+
+  acm_certificate = false
 }
 
 module "dev-lambda" {
-  source = "git::https://github.com/nalbam/terraform-aws-lambda-api.git"
+  source = "github.com/nalbam/terraform-aws-lambda-api?ref=v0.12.2"
   region = var.region
 
   name         = var.name
@@ -31,8 +34,4 @@ module "dev-lambda" {
     CIRCLECI_API   = var.CIRCLECI_API
     CIRCLECI_TOKEN = var.CIRCLECI_TOKEN
   }
-}
-
-output "url" {
-  value = "https://${module.dev-lambda.domain}/webhook"
 }
