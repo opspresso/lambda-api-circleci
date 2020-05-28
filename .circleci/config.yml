@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Package
           command: |
-            ./package.sh
+            bash ./package.sh
       - persist_to_workspace:
           root: .
           paths:
@@ -20,35 +20,39 @@ jobs:
           path: target/lambda.zip
   plan:
     docker:
-      - image: hashicorp/terraform:light
+      - image: hashicorp/terraform
     steps:
       - attach_workspace:
           at: .
       - run:
-          name: Plan
+          name: Terraform Plan
           command: |
             terraform init
-            terraform plan
+            terraform plan -var build_no=${CIRCLE_BUILD_NUM}
   apply:
     docker:
-      - image: hashicorp/terraform:light
+      - image: hashicorp/terraform
     steps:
       - attach_workspace:
           at: .
       - run:
-          name: Apply
+          name: Terraform Apply
           command: |
             terraform init
-            terraform apply -auto-approve
+            terraform apply -var build_no=${CIRCLE_BUILD_NUM} -auto-approve
 
 workflows:
   version: 2
-  deploy:
+  apply:
     jobs:
       - build
       - plan:
           requires:
             - build
+      # - approval:
+      #     type: approval
+      #     requires:
+      #       - plan
       - apply:
           requires:
             - plan
