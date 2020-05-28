@@ -18,37 +18,37 @@ jobs:
             - .
       - store_artifacts:
           path: target/lambda.zip
-  test:
+  plan:
     docker:
       - image: hashicorp/terraform:light
     steps:
       - attach_workspace:
           at: .
       - run:
-          name: Test
+          name: Plan
           command: |
             terraform init
             terraform plan
-  deploy:
+  apply:
     docker:
       - image: hashicorp/terraform:light
     steps:
       - attach_workspace:
           at: .
       - run:
-          name: Deploy
+          name: Apply
           command: |
             terraform init
             terraform apply -auto-approve
 
 workflows:
   version: 2
-  apply:
+  deploy:
     jobs:
       - build
-      - test:
+      - plan:
           requires:
             - build
-      - deploy:
+      - apply:
           requires:
-            - test
+            - plan
