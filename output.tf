@@ -1,5 +1,5 @@
-# output
+# # output
 
-output "url" {
-  value = "https://${module.dev-lambda.domain}/webhook"
-}
+# output "url" {
+#   value = "https://${module.dev-lambda.domain}/webhook"
+# }
